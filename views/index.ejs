@@ -74,7 +74,7 @@
         <div class="stat-all">
           <div class="card">
             <div>
-              <h5 class="card-title">Nombres de cas actuelle</h5>
+              <h5 class="card-title">Nombres de cas actif</h5>
               <a class="card-text" id="counter-todayCases"><%= scrap(covidStats.active)%> personnes</a>
             </div>
           </div>
@@ -87,28 +87,34 @@
     var recoveredCurrent =recovered;
     %>
     <script>
+      //TODO Rewrite chart
+
       window.onload = () =>{
         var getCasesCurrent = "<%= casesCurrent  %>";
         var getRecoveredCurrent = "<%= recoveredCurrent  %>";
-        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctxCase = document.getElementById('myChartActualCase').getContext('2d');
+        var ctxRecovered = document.getElementById('myChartRecovered').getContext('2d');
 
         let parseCasesCurrent = JSON.parse(getCasesCurrent)
         let parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
-      console.log(parseRecoveredCurrent)
+      console.log(parseCasesCurrent)
 
-        new Chart(ctx, {
+        new Chart(ctxCase, {
           type: 'line',
           data: {
             labels: [],
-            datasets: [{
+            datasets: [
+                    {
               label: 'Nombres de cas actuelle',
-              borderColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(200,52,81)',
+              borderWidth:1,
               yAxisID: 'A',
               data: parseCasesCurrent
             },
               {
                 label: 'Nombres de soigné actuelle',
-                borderColor: 'rgb(75,205,59)',
+                borderColor: 'rgb(57,164,43)',
+                borderWidth:1,
                 yAxisID: 'A',
                 data: parseRecoveredCurrent
               }]
@@ -118,6 +124,9 @@
               yAxes: [{
                 id: 'A',
                 type: 'linear',
+                ticks: {
+                  beginAtZero: true,
+                },
               }]
             }
           }
@@ -125,7 +134,8 @@
       }
     </script>
 
-    <canvas id="myChart" width="350" height="150"></canvas>
+    <canvas id="myChartActualCase" width="150" height="25"></canvas>
+  <canvas id="myChartRecovered" width="150" height="25"></canvas>
 
   <!-- Footer -->
   <div class="footer">
