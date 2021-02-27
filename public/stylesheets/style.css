@@ -46,13 +46,15 @@ h5{
 }
 .stat-all{
   display: flex;
+  margin: 30px;
 }
 
 @media (max-width: 800px) {
   .stat-all{
     display: block;
+    width: 70%;
   }
   .card{
-    width: 90%;
+    width: auto;
   }
 }
