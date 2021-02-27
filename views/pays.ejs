@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <meta name="description" content="Site de statistique du covid">
+    <meta name="keywords" content="covid-19, zechaos">
+
+    <meta name="author" content="zechaos">
+    <script src="/javascripts/counter.js" type="module"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+    <title>Minimal Covid</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+<h1 class="title">Minimal Covid</h1>
+<p><%=covidStats.country %></p>
+<section class="tableau">
+    <div align="center">
+        <div class="stat-all">
+            <div class="card">
+                <div>
+                    <h5 class="card-title">Nombre de cas total</h5>
+                    <a class="card-text" id="counter-cases"><%= covidStats.cases.toLocaleString()%></a>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h5 class="card-title">Nombre de morts total</h5>
+                    <a class="card-text" id="counter-deaths"><%= covidStats.deaths.toLocaleString()%></a>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h5 class="card-title">Nombre de soigné total</h5>
+                    <a class="card-text" id="counter-recovered"><%= covidStats.recovered.toLocaleString()%></a>
+                </div>
+            </div>
+        </div>
+        <div class="stat-all">
+            <div class="card">
+                <div>
+                    <h5 class="card-title">Nombre de cas aujourd'hui</h5>
+                    <a class="card-text" id="counter-todayCases"><%= covidStats.todayCases.toLocaleString()%></a>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h5 class="card-title">Nombre de morts aujourd'hui</h5>
+                    <a class="card-text" id="counter-todayDeaths"><%= covidStats.todayDeaths.toLocaleString()%></a>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <h5 class="card-title">Nombre de soigné aujourd'hui</h5>
+                    <a class="card-text" id="counter-todayRecovered" ><%= covidStats.todayRecovered.toLocaleString()%></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<h5>Nombre de cas actuelle: <%= covidStats.active.toLocaleString()%></h5>
+    <label for="pays"><input id="pays" type="text" placeholder="Votre pays" maxlength="50" required></label>
+    <input type="hidden" id="stats" name="covidStats" value="<%= covidStats%>">
+    <button id="submit">
+        Submit
+    </button>
+
+
+<script>
+    window.addEventListener('load', function() {
+        document.querySelector('#submit').addEventListener('click', () => {
+            const ville = document.getElementById("pays").value
+
+            axios.get(`/${ville}`)
+        })
+    })
+</script>
+
+
+</body>
+</html>

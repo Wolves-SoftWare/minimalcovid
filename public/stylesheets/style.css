@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+body{
+  font-family: 'Ubuntu', serif;
+  background-color: #3e3e4e;
+}
+
+h1,h5,p,a{
+  color: #fafafa;
+  margin: 0px;
+}
+.text-center{
+  text-align: center;
+}
+.row{
+  display: flex;
+}
+a{
+  font-size: 20px;
+}
+h5{
+  font-size: 26px;
+}
+.list-unstyled{
+  list-style: none;
+}
+.title{
+  text-align: center;
+}
+.footer{
+  height: 80px;
+}
+.card{
+  width: 25%;
+  flex-direction: row;
+  box-shadow: 5px 5px 5px #2e313c;
+  background-color: #23272A;
+  transition: 1s;
+  transform: scale(1);
+  padding: 30px;
+  margin: 10px auto;
+}
+.card:hover{
+  transition: 0.3s;
+  transform: scale(1.05)
+}
+.stat-all{
+  display: flex;
+}
+
+@media (max-width: 800px) {
+  .stat-all{
+    display: block;
+  }
+  .card{
+    width: 90%;
+  }
+}

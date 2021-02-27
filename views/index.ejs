@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <meta name="description" content="Site de statistique du covid">
+    <meta name="keywords" content="covid-19, zechaos">
+
+    <meta name="author" content="zechaos">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <title>Minimal Covid</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+
+  <body>
+  <%
+  function scrap(nStr){
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    const rgx = /(\d+)(\d{3})/; // Regex de repérage si il y a plus de trois chiffre
+    while (rgx.test(x1)) {// Boucle a chaque fois qu'il y a plus de 3 chiffres
+      x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+    }
+    return x1 + x2;
+  }%>
+    <h1 class="title">Minimal Covid</h1>
+    <p><%=covidStats.country %></p>
+    <section class="tableau">
+      <div align="center">
+          <div class="stat-all">
+            <div class="card">
+              <div>
+                <h5 class="card-title">Nombres de cas total</h5>
+                <a class="card-text" id="counter-cases"><%= scrap(covidStats.cases)%></a>
+              </div>
+            </div>
+            <div class="card">
+              <div>
+                <h5 class="card-title">Nombres de morts total</h5>
+                <a class="card-text" id="counter-deaths"><%= scrap(covidStats.deaths)%></a>
+              </div>
+            </div>
+            <div class="card">
+              <div>
+                <h5 class="card-title">Nombres de soigné total</h5>
+                <a class="card-text" id="counter-recovered"><%= scrap(covidStats.recovered)%></a>
+              </div>
+            </div>
+        </div>
+        <div class="stat-all">
+          <div class="card">
+            <div>
+              <h5 class="card-title">Nombres de cas aujourd'hui</h5>
+              <a class="card-text" id="counter-todayCases"><%= scrap(covidStats.todayCases)%></a>
+            </div>
+          </div>
+          <div class="card">
+            <div>
+              <h5 class="card-title">Nombres de morts aujourd'hui</h5>
+              <a class="card-text" id="counter-todayDeaths"><%= scrap(covidStats.todayDeaths)%></a>
+            </div>
+          </div>
+          <div class="card">
+            <div>
+              <h5 class="card-title">Nombres de soigné aujourd'hui</h5>
+              <a class="card-text" id="counter-todayRecovered" ><%= scrap(covidStats.todayRecovered)%></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-all">
+          <div class="card">
+            <div>
+              <h5 class="card-title">Nombres de cas actuelle</h5>
+              <a class="card-text" id="counter-todayCases"><%= scrap(covidStats.active)%></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  <% var casesCurrent =cases;
+    var recoveredCurrent =recovered;
+    %>
+    <script>
+      window.onload = () =>{
+        var getCasesCurrent = "<%= casesCurrent  %>";
+        var getRecoveredCurrent = "<%= recoveredCurrent  %>";
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        let parseCasesCurrent = JSON.parse(getCasesCurrent)
+        let parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
+      console.log(parseRecoveredCurrent)
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Nombres de cas actuelle',
+              borderColor: 'rgb(255, 99, 132)',
+              yAxisID: 'A',
+              data: parseCasesCurrent
+            },
+              {
+                label: 'Nombres de soigné actuelle',
+                borderColor: 'rgb(75,205,59)',
+                yAxisID: 'A',
+                data: parseRecoveredCurrent
+              }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                id: 'A',
+                type: 'linear',
+              }]
+            }
+          }
+        });
+      }
+    </script>
+
+    <canvas id="myChart" width="450" height="250"></canvas>
+
+  <!-- Footer -->
+  <div class="footer">
+    <footer class="page-footer font-small indigo">
+      <div class="text-center">
+        <div class="footer-copyright text-center py-2"><p>Made with ❤️ by<a href="https://github.com/Wolves-SoftWare"> Wolves SoftWare</a> (<a href="https://github.com/zechaos031">Zechaos</a>) © 2021 Copyright:
+        </div>
+      </div>
+    </footer>
+</div>
+
+
+</body>
+</html>
