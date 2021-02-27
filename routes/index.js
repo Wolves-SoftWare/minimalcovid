@@ -22,7 +22,6 @@ router.get('/', async function(req, res, next) {
         DateCase.push(date)
       }
       for (const date of keyRecovered) {
-        console.log(CurrentRecovered)
 
         CurrentRecovered.push(parseRecoveredData[date])
         DateCase.push(date)
