@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-    <title>Minimal Covid</title>
+    <title><%=title%> V<%=version%></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
 
@@ -26,8 +26,7 @@
     }
     return x1 + x2;
   }%>
-    <h1 class="title">Minimal Covid</h1>
-    <p><%=covidStats.country %></p>
+    <h1 class="title"><%=title%> V<%=version%></h1>
     <section class="tableau">
       <div align="center">
           <div class="stat-all" align="center">
@@ -85,6 +84,8 @@
 
   <% var casesCurrent =cases;
     var recoveredCurrent =recovered;
+  var casesToday =todayRecovered;
+  var recoveredToday =todayCases;
     %>
     <script>
       //TODO Rewrite chart
@@ -92,12 +93,16 @@
       window.onload = () =>{
         var getCasesCurrent = "<%= casesCurrent  %>";
         var getRecoveredCurrent = "<%= recoveredCurrent  %>";
+        var getCasesToday = "<%= casesToday  %>";
+        var getRecoveredToday = "<%= recoveredToday  %>";
         var ctxCase = document.getElementById('myChartActualCase').getContext('2d');
         var ctxRecovered = document.getElementById('myChartRecovered').getContext('2d');
+        var ctxTodayCase = document.getElementById('myChartToday').getContext('2d');
 
         let parseCasesCurrent = JSON.parse(getCasesCurrent)
         let parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
-      console.log(parseCasesCurrent)
+        let parseCasesToday = JSON.parse(getCasesToday)
+        let parseRecoveredToday = JSON.parse(getRecoveredToday)
 
         new Chart(ctxCase, {
           type: 'line',
@@ -110,7 +115,29 @@
               borderWidth:1,
               yAxisID: 'A',
               data: parseCasesCurrent
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Nombres de cas actuelle en fonction du temps'
             },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  stepSize: 1
+                },
+                id: 'A',
+                type: 'linear',
+              }]
+            }
+          }
+        });
+        new Chart(ctxRecovered, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [
               {
                 label: 'Nombres de soigné actuelle',
                 borderColor: 'rgb(57,164,43)',
@@ -120,6 +147,46 @@
               }]
           },
           options: {
+            title: {
+              display: true,
+              text: 'Nombres de soigné actuelle en fonction du temps'
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  stepSize: 1
+                },
+                id: 'A',
+                type: 'linear',
+              }]
+            }
+          }
+        });
+        new Chart(ctxTodayCase, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: 'Nombres de cas aujourd\'hui',
+                borderColor: 'rgb(200,52,81)',
+                borderWidth:1,
+                yAxisID: 'A',
+                data: parseCasesToday
+              },
+              {
+                label: 'Nombres de soigné aujourd\'hui',
+                borderColor: 'rgb(57,164,43)',
+                borderWidth:1,
+                yAxisID: 'A',
+                data: parseRecoveredToday
+              }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Nombres de soigné et de cas aujourd\'hui en fonction du temps'
+            },
             scales: {
               yAxes: [{
                 id: 'A',
@@ -134,14 +201,19 @@
       }
     </script>
 
-    <canvas id="myChartActualCase" width="150" height="25"></canvas>
+  <canvas id="myChartActualCase" width="150" height="25"></canvas>
   <canvas id="myChartRecovered" width="150" height="25"></canvas>
+  <canvas id="myChartToday" width="150" height="25"></canvas>
+
 
   <!-- Footer -->
   <div class="footer">
     <footer class="page-footer font-small indigo">
       <div class="text-center">
-        <div class="footer-copyright text-center py-2"><p>Made with ❤️ by<a href="https://github.com/Wolves-SoftWare"> Wolves SoftWare</a> (<a href="https://github.com/zechaos031">Zechaos</a>) © 2021 Copyright
+        <div class="footer-copyright text-center py-2"><p>Made with ❤️ by<a href="https://github.com/Wolves-SoftWare"> Wolves SoftWare</a> (<a href="https://github.com/zechaos031">Zechaos</a>) <%=title%>© 2021 Copyright
+        </div>
+        <div>
+          <p>Les statistiques sont actualisées toutes les 10 minutes.</p>
         </div>
       </div>
     </footer>

@@ -8,31 +8,61 @@ router.get('/', async function(req, res, next) {
 
   fs.readFile('./data/cases.json').then(function (caseData) {
     fs.readFile('./data/recovered.json').then(function (recoveredData) {
+      fs.readFile('./data/todayRecovered.json').then(function (todayCaseData) {
+        fs.readFile('./data/TodayCases.json').then(function (todayRecoveredData) {
 
-      let parseCaseData = JSON.parse(caseData)
-      let parseRecoveredData = JSON.parse(recoveredData)
-      let CurrentCase = []
-      let CurrentRecovered = []
-      let DateCase = []
-      let keyCase = Object.keys(parseCaseData)
-      let keyRecovered = Object.keys(parseRecoveredData)
+          let parseCaseData = JSON.parse(caseData)
+          let parseRecoveredData = JSON.parse(recoveredData)
+          let CurrentCase = []
+          let CurrentRecovered = []
+          let parseTodayCaseData = JSON.parse(todayCaseData)
+          let parseTodayRecoveredData = JSON.parse(todayRecoveredData)
+          let todayCurrentCase = []
+          let todayCurrentRecovered = []
+          let DateCase = []
+          let keyCase = Object.keys(parseCaseData)
+          let keyRecovered = Object.keys(parseRecoveredData)
+          let keyTodayCase = Object.keys(parseTodayCaseData)
+          let keyTodayRecovered = Object.keys(parseTodayRecoveredData)
+          for (const date of keyCase) {
+            CurrentCase.push(parseCaseData[date])
+            DateCase.push(date)
+          }
+          for (const date of keyRecovered) {
 
-      for (const date of keyCase) {
-        CurrentCase.push(parseCaseData[date])
-        DateCase.push(date)
-      }
-      for (const date of keyRecovered) {
+            CurrentRecovered.push(parseRecoveredData[date])
+            DateCase.push(date)
+          }
+          for (const date of keyTodayCase) {
 
-        CurrentRecovered.push(parseRecoveredData[date])
-        DateCase.push(date)
-      }
+            todayCurrentCase.push(parseTodayCaseData[date])
+            DateCase.push(date)
+          }
+          for (const date of keyTodayRecovered) {
 
-      let stringifyCase = JSON.stringify(CurrentCase)
-      let stringifyRecovered = JSON.stringify(CurrentRecovered)
+            todayCurrentRecovered.push(parseTodayRecoveredData[date])
+            DateCase.push(date)
+          }
 
-      let stringifyDate = JSON.stringify(DateCase)
+          let stringifyCase = JSON.stringify(CurrentCase)
+          let stringifyRecovered = JSON.stringify(CurrentRecovered)
+          let stringifyTodayCase = JSON.stringify(todayCurrentCase)
+          let stringifyTodayRecovered = JSON.stringify(todayCurrentRecovered)
+          let stringifyDate = JSON.stringify(DateCase)
 
-      res.render('index', {title: 'Minimal COVID', covidStats, cases: stringifyCase, dates: stringifyDate, recovered: stringifyRecovered});
+          res.render('index', {
+            title: 'Minimal COVID',
+            version:'1.1',
+            covidStats,
+            cases: stringifyCase,
+            dates: stringifyDate,
+            recovered: stringifyRecovered,
+            todayRecovered:stringifyTodayRecovered,
+            todayCases:stringifyTodayCase
+
+          });
+        })
+      })
     })
   })
 

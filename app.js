@@ -8,8 +8,9 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 var cron = require('node-cron');
+require('./utils/job')
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('*/10 * * * *', async () => {
 
   require('./utils/job')
 
