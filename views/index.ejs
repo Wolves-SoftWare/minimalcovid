@@ -117,6 +117,7 @@
             }]
           },
           options: {
+            responsive:true,
             title: {
               display: true,
               text: 'Nombres de cas actuelle en fonction du temps'
@@ -146,6 +147,7 @@
               }]
           },
           options: {
+            responsive:true,
             title: {
               display: true,
               text: 'Nombres de soigné actuelle en fonction du temps'
@@ -182,6 +184,7 @@
               }]
           },
           options: {
+            responsive:true,
             title: {
               display: true,
               text: 'Nombres de soigné et de cas par jour en fonction du temps'
@@ -199,10 +202,13 @@
         });
       }
     </script>
+  <div>
+    <canvas id="myChartActualCase"></canvas>
+    <canvas id="myChartRecovered"></canvas>
+    <canvas id="myChartToday"></canvas>
+  </div>
 
-  <canvas id="myChartActualCase" width="150" height="25"></canvas>
-  <canvas id="myChartRecovered" width="150" height="25"></canvas>
-  <canvas id="myChartToday" width="150" height="25"></canvas>
+
 
 
   <!-- Footer -->

@@ -48,11 +48,22 @@ h5{
   display: flex;
   margin: 30px;
 }
+@media (max-width: 2000px) {
+
+  #myChartActualCase, #myChartRecovered, #myChartToday {
+    width: 150px;
+    height: 25px;
+  }
+}
 
 @media (max-width: 800px) {
   .stat-all{
     display: block;
     width: 70%;
+  }
+  #myChartActualCase, #myChartRecovered, #myChartToday{
+    width: 350px;
+    height: 150px;
   }
   .card{
     width: auto;
