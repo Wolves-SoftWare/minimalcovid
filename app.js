@@ -8,8 +8,6 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 var cron = require('node-cron');
-require('./utils/job')
-
 cron.schedule('*/10 * * * *', async () => {
 
   require('./utils/job')
@@ -24,7 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(function (req, res, next) {
+  res.removeHeader("X-Powered-By");
+      next();
+});
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

@@ -1,45 +1,48 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const covid = require('novelcovid')
 const fs = require('fs/promises')
 
-router.get('/', async function(req, res, next) {
+router.get('/', async function(req, res) {
   const covidStats = await covid.all();
 
   fs.readFile('./data/cases.json').then(function (caseData) {
     fs.readFile('./data/recovered.json').then(function (recoveredData) {
       fs.readFile('./data/todayRecovered.json').then(function (todayCaseData) {
-        fs.readFile('./data/TodayCases.json').then(function (todayRecoveredData) {
+        fs.readFile('./data/todayCases.json').then(function (todayRecoveredData) {
 
           let parseCaseData = JSON.parse(caseData)
           let parseRecoveredData = JSON.parse(recoveredData)
-          let CurrentCase = []
-          let CurrentRecovered = []
           let parseTodayCaseData = JSON.parse(todayCaseData)
           let parseTodayRecoveredData = JSON.parse(todayRecoveredData)
+
+          let CurrentCase = []
+          let CurrentRecovered = []
           let todayCurrentCase = []
           let todayCurrentRecovered = []
           let DateCase = []
+
           let keyCase = Object.keys(parseCaseData)
           let keyRecovered = Object.keys(parseRecoveredData)
           let keyTodayCase = Object.keys(parseTodayCaseData)
           let keyTodayRecovered = Object.keys(parseTodayRecoveredData)
+
           for (const date of keyCase) {
             CurrentCase.push(parseCaseData[date])
             DateCase.push(date)
           }
-          for (const date of keyRecovered) {
 
+          for (const date of keyRecovered) {
             CurrentRecovered.push(parseRecoveredData[date])
             DateCase.push(date)
           }
-          for (const date of keyTodayCase) {
 
+          for (const date of keyTodayCase) {
             todayCurrentCase.push(parseTodayCaseData[date])
             DateCase.push(date)
           }
-          for (const date of keyTodayRecovered) {
 
+          for (const date of keyTodayRecovered) {
             todayCurrentRecovered.push(parseTodayRecoveredData[date])
             DateCase.push(date)
           }
@@ -52,20 +55,17 @@ router.get('/', async function(req, res, next) {
 
           res.render('index', {
             title: 'Minimal COVID',
-            version:'1.1',
+            version: '1.1',
             covidStats,
             cases: stringifyCase,
             dates: stringifyDate,
             recovered: stringifyRecovered,
-            todayRecovered:stringifyTodayRecovered,
-            todayCases:stringifyTodayCase
-
+            todayRecovered: stringifyTodayRecovered,
+            todayCases: stringifyTodayCase
           });
         })
       })
     })
   })
-
-
 });
 module.exports = router;
