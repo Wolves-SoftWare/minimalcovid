@@ -1,6 +1,6 @@
 const covid = require('novelcovid')
 const fs = require('fs/promises')
-//
+//FIXME remove nodejs-cron and use crontab because nodejs-cron is stupid
 
     fs.readFile('./data/cases.json').then(async function (data) {
         const covidStats = await covid.all();
