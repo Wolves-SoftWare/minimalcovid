@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
     <meta name="description" content="Site de statistique du covid">
@@ -82,27 +82,26 @@
 
     </section>
 
-  <% var casesCurrent =cases;
-    var recoveredCurrent =recovered;
-  var casesToday =todayRecovered;
-  var recoveredToday =todayCases;
+  <%
+  const casesCurrent =cases;
+  const recoveredCurrent =recovered;
+  const casesToday =todayRecovered;
+  const recoveredToday =todayCases;
     %>
     <script>
-      //TODO Rewrite chart
-
       window.onload = () =>{
-        var getCasesCurrent = "<%= casesCurrent  %>";
-        var getRecoveredCurrent = "<%= recoveredCurrent  %>";
-        var getCasesToday = "<%= casesToday  %>";
-        var getRecoveredToday = "<%= recoveredToday  %>";
-        var ctxCase = document.getElementById('myChartActualCase').getContext('2d');
-        var ctxRecovered = document.getElementById('myChartRecovered').getContext('2d');
-        var ctxTodayCase = document.getElementById('myChartToday').getContext('2d');
+        const getCasesCurrent = "<%= casesCurrent  %>";
+        const getRecoveredCurrent = "<%= recoveredCurrent  %>";
+        const getCasesToday = "<%= casesToday  %>";
+        const getRecoveredToday = "<%= recoveredToday  %>";
+        const ctxCase = document.getElementById('myChartActualCase').getContext('2d');
+        const ctxRecovered = document.getElementById('myChartRecovered').getContext('2d');
+        const ctxTodayCase = document.getElementById('myChartToday').getContext('2d');
 
-        let parseCasesCurrent = JSON.parse(getCasesCurrent)
-        let parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
-        let parseCasesToday = JSON.parse(getCasesToday)
-        let parseRecoveredToday = JSON.parse(getRecoveredToday)
+        const parseCasesCurrent = JSON.parse(getCasesCurrent)
+        const parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
+        const parseCasesToday = JSON.parse(getCasesToday)
+        const parseRecoveredToday = JSON.parse(getRecoveredToday)
 
         new Chart(ctxCase, {
           type: 'line',
@@ -168,14 +167,14 @@
             labels: [],
             datasets: [
               {
-                label: 'Nombres de cas aujourd\'hui',
+                label: 'Nombres de cas par jour',
                 borderColor: 'rgb(200,52,81)',
                 borderWidth:1,
                 yAxisID: 'A',
                 data: parseCasesToday
               },
               {
-                label: 'Nombres de soigné aujourd\'hui',
+                label: 'Nombres de soigné par jour',
                 borderColor: 'rgb(57,164,43)',
                 borderWidth:1,
                 yAxisID: 'A',
@@ -185,7 +184,7 @@
           options: {
             title: {
               display: true,
-              text: 'Nombres de soigné et de cas aujourd\'hui en fonction du temps'
+              text: 'Nombres de soigné et de cas par jour en fonction du temps'
             },
             scales: {
               yAxes: [{
