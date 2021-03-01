@@ -98,6 +98,40 @@
         const ctxRecovered = document.getElementById('myChartRecovered').getContext('2d');
         const ctxTodayCase = document.getElementById('myChartToday').getContext('2d');
 
+        if(detectMob()){
+          ctxTodayCase.canvas.width = 250;
+          ctxTodayCase.canvas.height = 150;
+          ctxCase.canvas.width = 250;
+          ctxCase.canvas.height = 150;
+          ctxRecovered.canvas.width = 250;
+          ctxRecovered.canvas.height = 150;
+        }else{
+          ctxCase.canvas.width = 250;
+          ctxCase.canvas.height = 50;
+          ctxRecovered.canvas.width = 250;
+          ctxRecovered.canvas.height = 50;
+          ctxTodayCase.canvas.width = 250;
+          ctxTodayCase.canvas.height = 75;
+        }
+
+
+        function detectMob() {
+          const toMatch = [
+            /Android/i,
+            /webOS/i,
+            /iPhone/i,
+            /iPad/i,
+            /iPod/i,
+            /BlackBerry/i,
+            /Windows Phone/i
+          ];
+
+          return toMatch.some((toMatchItem) => {
+            return navigator.userAgent.match(toMatchItem);
+          });
+        }
+
+        console.log(detectMob())
         const parseCasesCurrent = JSON.parse(getCasesCurrent)
         const parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
         const parseCasesToday = JSON.parse(getCasesToday)
