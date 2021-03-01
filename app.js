@@ -7,14 +7,6 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 
 var app = express();
-var cron = require('node-cron');
-require('./utils/job')
-
-cron.schedule('*/10 * * * *', async () => {
-
-  require('./utils/job')
-
-})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
