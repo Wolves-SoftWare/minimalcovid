@@ -22,6 +22,9 @@ router.get('/', async function(req, res) {
           let todayCurrentRecovered = []
           let DateCase = []
 
+          let Day = []
+          let Mois = []
+
           let keyCase = Object.keys(parseCaseData)
           let keyRecovered = Object.keys(parseRecoveredData)
           let keyTodayCase = Object.keys(parseTodayCaseData)
@@ -34,31 +37,37 @@ router.get('/', async function(req, res) {
 
           for (const date of keyRecovered) {
             CurrentRecovered.push(parseRecoveredData[date])
-            DateCase.push(date)
           }
 
           for (const date of keyTodayCase) {
             todayCurrentCase.push(parseTodayCaseData[date])
-            DateCase.push(date)
           }
 
           for (const date of keyTodayRecovered) {
             todayCurrentRecovered.push(parseTodayRecoveredData[date])
-            DateCase.push(date)
+          }
+          console.log(DateCase)
+
+          for(const date of DateCase){
+            let [day,mois] = date.split('/')
+            Day.push(day)
+            Mois.push(mois)
           }
 
           let stringifyCase = JSON.stringify(CurrentCase)
           let stringifyRecovered = JSON.stringify(CurrentRecovered)
           let stringifyTodayCase = JSON.stringify(todayCurrentCase)
           let stringifyTodayRecovered = JSON.stringify(todayCurrentRecovered)
-          let stringifyDate = JSON.stringify(DateCase)
+          let stringifyDay = JSON.stringify(Day)
+          let stringifyMonth = JSON.stringify(Mois)
 
           res.render('index', {
             title: 'Minimal COVID',
             version: '1.1',
             covidStats,
             cases: stringifyCase,
-            dates: stringifyDate,
+            day: stringifyDay,
+            mois: stringifyMonth,
             recovered: stringifyRecovered,
             todayRecovered: stringifyTodayRecovered,
             todayCases: stringifyTodayCase

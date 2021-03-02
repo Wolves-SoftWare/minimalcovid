@@ -7,7 +7,9 @@ const fs = require('fs/promises')
 
         let parseData = JSON.parse(data)
         let date =new Date()
-        let form = (date.getDate())+'/'+ date.getMonth()
+        let mois = date.getMonth()
+        mois++
+        let form = (date.getDate())+'/'+ mois
             let newdate = {}
             Object.assign(newdate, {[form]:covidStats.active})
             Object.assign(parseData,newdate)
@@ -22,7 +24,9 @@ const fs = require('fs/promises')
 
         let parseData = JSON.parse(data)
         let date =new Date()
-        let form = (date.getDate())+'/'+ date.getMonth()
+        let mois = date.getMonth()
+        mois++
+        let form = (date.getDate())+'/'+ mois
         let newdate = {}
         Object.assign(newdate, {[form]:covidStats.recovered})
         Object.assign(parseData,newdate)
@@ -37,7 +41,10 @@ fs.readFile('./data/todayRecovered.json').then(async function (data) {
 
     let parseData = JSON.parse(data)
     let date =new Date()
-    let form = (date.getDate())+'/'+ date.getMonth()
+    let mois = date.getMonth()
+    mois++
+    let form = (date.getDate())+'/'+ mois
+
     let newdate = {}
     Object.assign(newdate, {[form]:covidStats.todayRecovered})
     Object.assign(parseData,newdate)
@@ -52,7 +59,9 @@ fs.readFile('./data/todayCases.json').then(async function (data) {
 
     let parseData = JSON.parse(data)
     let date =new Date()
-    let form = (date.getDate())+'/'+ date.getMonth()
+    let mois = date.getMonth()
+    mois++
+    let form = (date.getDate())+'/'+ mois
     let newdate = {}
     Object.assign(newdate, {[form]:covidStats.todayCases})
     Object.assign(parseData,newdate)

@@ -87,13 +87,16 @@
   const recoveredCurrent =recovered;
   const casesToday =todayRecovered;
   const recoveredToday =todayCases;
-    %>
+
+
+  %>
     <script>
       window.onload = () =>{
         const getCasesCurrent = "<%= casesCurrent  %>";
         const getRecoveredCurrent = "<%= recoveredCurrent  %>";
         const getCasesToday = "<%= casesToday  %>";
         const getRecoveredToday = "<%= recoveredToday  %>";
+
         const ctxCase = document.getElementById('myChartActualCase').getContext('2d');
         const ctxRecovered = document.getElementById('myChartRecovered').getContext('2d');
         const ctxTodayCase = document.getElementById('myChartToday').getContext('2d');
@@ -107,11 +110,11 @@
           ctxRecovered.canvas.height = 150;
         }else{
           ctxCase.canvas.width = 250;
-          ctxCase.canvas.height = 50;
+          ctxCase.canvas.height = 60;
           ctxRecovered.canvas.width = 250;
-          ctxRecovered.canvas.height = 50;
+          ctxRecovered.canvas.height = 60;
           ctxTodayCase.canvas.width = 250;
-          ctxTodayCase.canvas.height = 75;
+          ctxTodayCase.canvas.height = 90;
         }
 
 
@@ -131,11 +134,11 @@
           });
         }
 
-        console.log(detectMob())
         const parseCasesCurrent = JSON.parse(getCasesCurrent)
         const parseRecoveredCurrent = JSON.parse(getRecoveredCurrent)
         const parseCasesToday = JSON.parse(getCasesToday)
         const parseRecoveredToday = JSON.parse(getRecoveredToday)
+
 
         new Chart(ctxCase, {
           type: 'line',
@@ -229,9 +232,6 @@
     <canvas id="myChartToday"></canvas>
   </div>
 
-
-
-
   <!-- Footer -->
   <div class="footer">
     <footer class="page-footer font-small indigo">
@@ -240,6 +240,7 @@
         </div>
         <div>
           <p>Les statistiques sont actualisées toutes les 10 minutes.</p>
+          <a href="https://github.com/Wolves-SoftWare/minimalcovid">Projet open source</a>
         </div>
       </div>
     </footer>
