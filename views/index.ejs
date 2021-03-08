@@ -77,6 +77,18 @@
               <a class="card-text" id="counter-todayCases"><%= scrap(covidStats.active)%> personnes</a>
             </div>
           </div>
+          <div class="card">
+            <div>
+              <h5 class="card-title">Nombres de cas critique</h5>
+              <a class="card-text" id="counter-todayCases"><%= scrap(covidStats.critical)%> personnes</a>
+            </div>
+          </div>
+          <div class="card">
+            <div>
+              <h5 class="card-title">Nombres de personne testés</h5>
+              <a class="card-text" id="counter-todayCases"><%= scrap(covidStats.tests)%> personnes</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -148,7 +160,7 @@
                     {
               label: 'Nombres de cas actuelle',
               borderColor: 'rgb(200,52,81)',
-              borderWidth:1,
+              borderWidth:2,
               yAxisID: 'A',
               data: parseCasesCurrent
             }]
@@ -170,7 +182,7 @@
               {
                 label: 'Nombres de soigné actuelle',
                 borderColor: 'rgb(57,164,43)',
-                borderWidth:1,
+                borderWidth:2,
                 yAxisID: 'A',
                 data: parseRecoveredCurrent
               }]
@@ -188,6 +200,7 @@
             }
           }
         });
+        console.log(parseCasesToday)
         new Chart(ctxTodayCase, {
           type: 'line',
           data: {
@@ -196,7 +209,7 @@
               {
                 label: 'Nombres de cas par jour',
                 borderColor: 'rgb(200,52,81)',
-                borderWidth:1,
+                borderWidth:2,
                 yAxisID: 'A',
                 data: parseCasesToday
               },
@@ -218,7 +231,6 @@
                 id: 'A',
                 type: 'linear',
                 ticks: {
-                  beginAtZero: true,
                 },
               }]
             }

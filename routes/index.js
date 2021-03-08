@@ -29,7 +29,6 @@ router.get('/', async function(req, res) {
           let keyRecovered = Object.keys(parseRecoveredData)
           let keyTodayCase = Object.keys(parseTodayCaseData)
           let keyTodayRecovered = Object.keys(parseTodayRecoveredData)
-
           for (const date of keyCase) {
             CurrentCase.push(parseCaseData[date])
             DateCase.push(date)
@@ -46,7 +45,6 @@ router.get('/', async function(req, res) {
           for (const date of keyTodayRecovered) {
             todayCurrentRecovered.push(parseTodayRecoveredData[date])
           }
-          console.log(DateCase)
 
           for(const date of DateCase){
             let [day,mois] = date.split('/')

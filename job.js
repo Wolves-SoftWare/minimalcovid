@@ -1,73 +1,53 @@
 const covid = require('novelcovid')
 const fs = require('fs/promises')
+const CronJob = require('cron').CronJob;
 //FIXME remove nodejs-cron and use crontab because nodejs-cron is stupid
+const job = new CronJob('*/10 * * * *', function() {
+    fs.readFile('./data/todayCases.json').then(async function (todayCases) {
+        fs.readFile('./data/todayRecovered.json').then(async function (todayRecovered) {
+            fs.readFile('./data/recovered.json').then(async function (recovered) {
+                fs.readFile('./data/cases.json').then(async function (cases) {
+                    const covidStats = await covid.all();
 
-    fs.readFile('./data/cases.json').then(async function (data) {
-        const covidStats = await covid.all();
+                    let parsetodayCases = JSON.parse(todayCases)
+                    let parsetodayRecovered = JSON.parse(todayRecovered)
+                    let parserecovered = JSON.parse(recovered)
+                    let parsecases = JSON.parse(cases)
+                    let date = new Date()
+                    let mois = date.getMonth()
+                    mois++
+                    let form = (date.getDate()) + '/' + mois
 
-        let parseData = JSON.parse(data)
-        let date =new Date()
-        let mois = date.getMonth()
-        mois++
-        let form = (date.getDate())+'/'+ mois
-            let newdate = {}
-            Object.assign(newdate, {[form]:covidStats.active})
-            Object.assign(parseData,newdate)
-        let stringifyData = JSON.stringify(parseData)
+                    Object.assign(parsetodayCases, {[form]: covidStats.todayCases})
+                    Object.assign(parsetodayRecovered, {[form]: covidStats.todayRecovered})
+                    Object.assign(parserecovered, {[form]: covidStats.recovered})
+                    Object.assign(parsecases, {[form]: covidStats.active})
 
-        fs.writeFile('./data/cases.json', stringifyData).then(() => {
-            console.log('Nouvel donné entré')
+                    console.log(parsetodayCases)
+
+                    let StringifytodayCases = JSON.stringify(parsetodayCases)
+                    let StringifytodayRecovered = JSON.stringify(parsetodayRecovered)
+                    let Stringifyrecovered = JSON.stringify(parserecovered)
+                    let Stringifycases = JSON.stringify(parsecases)
+
+
+                    fs.writeFile('./data/todayCases.json', StringifytodayCases).then(() => {
+                        console.log('Nouvel donné entré todayCases: ' + covidStats.todayCases)
+                    })
+                    fs.writeFile('./data/todayRecovered.json', StringifytodayRecovered).then(() => {
+                        console.log('Nouvel donné entré todayRecovered: ' + covidStats.todayRecovered)
+                    })
+                    fs.writeFile('./data/recovered.json', Stringifyrecovered).then(() => {
+                        console.log('Nouvel donné entré recovered: ' + covidStats.recovered)
+                    })
+                    fs.writeFile('./data/cases.json', Stringifycases).then(() => {
+                        console.log('Nouvel donné entré active: ' + covidStats.active)
+                    })
+                })
+            })
         })
     })
-    fs.readFile('./data/recovered.json').then(async function (data) {
-        const covidStats = await covid.all();
-
-        let parseData = JSON.parse(data)
-        let date =new Date()
-        let mois = date.getMonth()
-        mois++
-        let form = (date.getDate())+'/'+ mois
-        let newdate = {}
-        Object.assign(newdate, {[form]:covidStats.recovered})
-        Object.assign(parseData,newdate)
-        let stringifyData = JSON.stringify(parseData)
-
-        fs.writeFile('./data/recovered.json', stringifyData).then(() => {
-            console.log('Nouvel donné entré')
-        })
-    })
-fs.readFile('./data/todayRecovered.json').then(async function (data) {
-    const covidStats = await covid.all();
-
-    let parseData = JSON.parse(data)
-    let date =new Date()
-    let mois = date.getMonth()
-    mois++
-    let form = (date.getDate())+'/'+ mois
-
-    let newdate = {}
-    Object.assign(newdate, {[form]:covidStats.todayRecovered})
-    Object.assign(parseData,newdate)
-    let stringifyData = JSON.stringify(parseData)
-
-    fs.writeFile('./data/todayRecovered.json', stringifyData).then(() => {
-        console.log('Nouvel donné entré')
-    })
-})
-fs.readFile('./data/todayCases.json').then(async function (data) {
-    const covidStats = await covid.all();
-
-    let parseData = JSON.parse(data)
-    let date =new Date()
-    let mois = date.getMonth()
-    mois++
-    let form = (date.getDate())+'/'+ mois
-    let newdate = {}
-    Object.assign(newdate, {[form]:covidStats.todayCases})
-    Object.assign(parseData,newdate)
-    let stringifyData = JSON.stringify(parseData)
-
-    fs.writeFile('./data/todayCases.json', stringifyData).then(() => {
-        console.log('Nouvel donné entré')
-    })
-})
+}, null, true, 'Europe/Paris');
+console.log('Lancement du job...')
+job.start()
+console.log('Job en attente...')
