@@ -15,6 +15,6 @@
     "novelcovid": "^3.0.0"
   },
   "devDependencies": {
-    "node-cron": "^2.0.3"
+    "cron": "^1.8.2"
   }
 }
