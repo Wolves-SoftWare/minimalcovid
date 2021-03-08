@@ -61,7 +61,7 @@ router.get('/', async function(req, res) {
 
           res.render('index', {
             title: 'Minimal COVID',
-            version: '1.1',
+            version: require('../package.json').version,
             covidStats,
             cases: stringifyCase,
             day: stringifyDay,
