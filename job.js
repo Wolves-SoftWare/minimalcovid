@@ -14,7 +14,6 @@ const CronJob = require('cron').CronJob;
                     let parsecases = JSON.parse(cases)
                     let date = new Date()
                     let mois = date.getMonth()
-                    console.log(date.getHours())
                     mois++
                     let form = (date.getDate()) + '/' + mois +' | '+ date.getHours() +'h'
 
@@ -23,7 +22,6 @@ const CronJob = require('cron').CronJob;
                     Object.assign(parserecovered, {[form]: covidStats.recovered})
                     Object.assign(parsecases, {[form]: covidStats.active})
 
-                    console.log(parsetodayCases)
 
                     let StringifytodayCases = JSON.stringify(parsetodayCases)
                     let StringifytodayRecovered = JSON.stringify(parsetodayRecovered)
