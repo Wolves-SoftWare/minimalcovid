@@ -2,7 +2,6 @@ const covid = require('novelcovid')
 const fs = require('fs/promises')
 const CronJob = require('cron').CronJob;
 //FIXME remove nodejs-cron and use crontab because nodejs-cron is stupid
-const job = new CronJob('*/10 * * * *', function() {
     fs.readFile('./data/todayCases.json').then(async function (todayCases) {
         fs.readFile('./data/todayRecovered.json').then(async function (todayRecovered) {
             fs.readFile('./data/recovered.json').then(async function (recovered) {
@@ -15,8 +14,9 @@ const job = new CronJob('*/10 * * * *', function() {
                     let parsecases = JSON.parse(cases)
                     let date = new Date()
                     let mois = date.getMonth()
+                    console.log(date.getHours())
                     mois++
-                    let form = (date.getDate()) + '/' + mois
+                    let form = (date.getDate()) + '/' + mois +' | '+ date.getHours() +'h'
 
                     Object.assign(parsetodayCases, {[form]: covidStats.todayCases})
                     Object.assign(parsetodayRecovered, {[form]: covidStats.todayRecovered})
@@ -47,7 +47,5 @@ const job = new CronJob('*/10 * * * *', function() {
             })
         })
     })
-}, null, true, 'Europe/Paris');
 console.log('Lancement du job...')
-job.start()
 console.log('Job en attente...')
